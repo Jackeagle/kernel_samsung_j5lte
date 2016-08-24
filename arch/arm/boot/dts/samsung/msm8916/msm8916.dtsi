@@ -379,7 +379,8 @@
 			< 1593600000 13>,
 			< 1689600000 14>,
 			< 1785600000 15>,
-			< 1881600000 16>;
+			< 1881600000 16>,
+			< 1977600000 17>;
 	};
 
 	cpubw: qcom,cpubw@0 {
@@ -433,7 +434,8 @@
 			 < 1593600 >,
 			 < 1689600 >,
 			 < 1785600 >,
-			 < 1881600 >;
+			 < 1881600 >,
+			 < 1977600 >;
 	};
 
 	qcom,sps {
@@ -1410,7 +1412,6 @@
 			 <&clock_debug clk_gcc_debug_mux>,
 			 <&clock_gcc clk_wcnss_m_clk>;
 		clock-names = "xo", "rf_clk", "measure", "wcnss_debug";
-
 		qcom,has-autodetect-xo;
 		qcom,wlan-rx-buff-count = <512>;
 		qcom,is-pronto-vt;
