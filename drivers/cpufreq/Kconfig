@@ -193,12 +193,6 @@ config CPU_FREQ_DEFAULT_GOV_ALUCARD
  	bool "alucard"
  	select CPU_FREQ_GOV_ALUCARD
 
-config CPU_FREQ_DEFAULT_GOV_SMARTASS2
-	bool "smartass2"
-	select CPU_FREQ_GOV_SMARTASS2
-	help
-          Use the CPUFreq governor 'smartassV2' as default.
-
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -366,15 +360,7 @@ config CPU_FREQ_GOV_INTEL
 
 config CPU_FREQ_GOV_ALUCARD
  	tristate "'alucard' cpufreq governor"
- 	depends on CPU_FREQ
-
-config CPU_FREQ_GOV_SMARTASS2
-	tristate "'smartassV2' cpufreq governor"
-	depends on CPU_FREQ
-	help
-	  'smartassV2' - a "smart" optimized governor for j5!
-
-          If in doubt, say N.
+ 	depends on CPU_FREQ 
 
 config CPU_BOOST
 	tristate "Event base short term CPU freq boost"

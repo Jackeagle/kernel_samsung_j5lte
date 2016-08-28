@@ -24,7 +24,6 @@ obj-$(CONFIG_CPU_FREQ_GOV_HYPER)       += cpufreq_hyper.o
 obj-$(CONFIG_CPU_FREQ_GOV_YANKACTIVE)  += cpufreq_yankactive.o
 obj-$(CONFIG_CPU_FREQ_GOV_INTEL)       += cpufreq_intel.o
 obj-$(CONFIG_CPU_FREQ_GOV_ALUCARD)     += cpufreq_alucard.o
-obj-$(CONFIG_CPU_FREQ_GOV_SMARTASS2)	+= cpufreq_smartass2.o
 obj-$(CONFIG_CPU_FREQ_GOV_COMMON)		+= cpufreq_governor.o
 obj-$(CONFIG_CPU_BOOST)			+= cpu-boost.o
 
