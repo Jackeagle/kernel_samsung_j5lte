@@ -2448,7 +2448,23 @@ CONFIG_MEDIA_TUNER_MC44S803=y
 #
 # CONFIG_DVB_DUMMY_FE is not set
 # CONFIG_TDMB is not set
-# CONFIG_MTV is not set
+CONFIG_MTV=y
+CONFIG_MTV_QUALCOMM=y
+# CONFIG_MTV_SLSI is not set
+# CONFIG_MTV_MARVELL is not set
+# CONFIG_MTV_BROADCOM is not set
+# CONFIG_MTV_SPREADTRUM is not set
+# CONFIG_MTV_FC8150 is not set
+CONFIG_MTV_FC8300=y
+# CONFIG_MTV_MTV222 is not set
+# CONFIG_MTV_MTV23x is not set
+CONFIG_MTV_SPI=y
+# CONFIG_MTV_EBI is not set
+# CONFIG_MTV_TSIF is not set
+# CONFIG_MTV_I2C is not set
+# CONFIG_MTV_SIMUL is not set
+# CONFIG_MTV_DEBUG is not set
+# CONFIG_MTV_ANT_DET is not set
 
 #
 # Graphics support
