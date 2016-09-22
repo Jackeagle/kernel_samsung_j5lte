@@ -14,7 +14,7 @@ config FB_MSM_MDSS_HDMI_PANEL
 
 config FB_MSM_MDSS_HDMI_MHL_SII8334
 	depends on FB_MSM_MDSS_HDMI_PANEL
-	bool 'MHL SII8334 support '
+	bool "MHL SII8334 support"
 	default n
 	---help---
 	  Support the HDMI to MHL conversion.

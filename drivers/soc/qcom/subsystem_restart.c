@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2016, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -524,6 +524,12 @@ static void subsystem_ramdump(struct subsys_device *dev, void *data)
 	dev->do_ramdump_on_put = false;
 }
 
+static void subsystem_free_memory(struct subsys_device *dev, void *data)
+{
+	if (dev->desc->free_memory)
+		dev->desc->free_memory(dev->desc);
+}
+
 static void subsystem_powerup(struct subsys_device *dev, void *data)
 {
 	const char *name = dev->desc->name;
@@ -729,6 +735,8 @@ void subsystem_put(void *subsystem)
 	}
 	mutex_unlock(&track->lock);
 
+	subsystem_free_memory(subsys, NULL);
+
 	subsys_d = find_subsys(subsys->desc->depends_on);
 	if (subsys_d) {
 		subsystem_put(subsys_d);
@@ -768,8 +776,26 @@ static void subsystem_restart_wq_func(struct work_struct *work)
 		track = &dev->track;
 	}
 
+	/*
+	 * If a system reboot/shutdown is under way, ignore subsystem errors.
+	 * However, print a message so that we know that a subsystem behaved
+	 * unexpectedly here.
+	 */
+	if (system_state == SYSTEM_RESTART
+		|| system_state == SYSTEM_POWER_OFF) {
+		WARN(1, "SSR aborted: %s, system reboot/shutdown is under way\n",
+			desc->name);
+		return;
+	}
+
 	mutex_lock(&track->lock);
 	do_epoch_check(dev);
+
+	if (dev->track.state == SUBSYS_OFFLINE) {
+		mutex_unlock(&track->lock);
+		WARN(1, "SSR aborted: %s subsystem not online\n", desc->name);
+		return;
+	}
 
 	/*
 	 * It's necessary to take the registration lock because the subsystem
@@ -793,6 +819,8 @@ static void subsystem_restart_wq_func(struct work_struct *work)
 
 	/* Collect ram dumps for all subsystems in order here */
 	for_each_subsys_device(list, count, NULL, subsystem_ramdump);
+
+	for_each_subsys_device(list, count, NULL, subsystem_free_memory);
 
 	notify_each_subsys_device(list, count, SUBSYS_BEFORE_POWERUP, NULL);
 	for_each_subsys_device(list, count, NULL, subsystem_powerup);
